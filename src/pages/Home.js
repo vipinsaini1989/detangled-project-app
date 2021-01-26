@@ -1,5 +1,6 @@
 import { Grid, makeStyles, Modal } from '@material-ui/core';
 import React, { useState } from 'react';
+import AddEditForm from '../components/AddEditForm';
 import SimpleCard from '../components/SimpleCard';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +31,7 @@ export default function Home() {
       </Grid>
 
       <Modal open={open} onClose={handleClose}>
-        <div>Hello world</div>
+        <AddEditForm />
       </Modal>
     </>
   );
