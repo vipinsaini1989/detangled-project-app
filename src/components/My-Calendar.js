@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
@@ -17,16 +17,22 @@ const useStyles = makeStyles((theme) => ({
 
 const MILLI_PER_DAY = 24 * 60 * 60 * 1000;
 
-export default function MyCalendar() {
+export default function MyCalendar({ event }) {
   const classes = useStyles();
+  const [range, setRange] = useState([new Date()]);
+
+  useEffect(() => {
+    if (event) {
+      const dateRange = [new Date(event.start)];
+      const nextDate = +new Date(event.start) + event.duration * MILLI_PER_DAY;
+      dateRange.push(new Date(nextDate));
+      setRange(dateRange);
+    }
+  }, [event]);
 
   return (
     <div>
-      <Calendar
-        className={classes.root}
-        selectRange
-        value={[new Date(), +new Date() + 3 * MILLI_PER_DAY]}
-      />
+      <Calendar className={classes.root} selectRange value={range} />
     </div>
   );
 }

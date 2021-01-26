@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core/';
 
 const useStyles = makeStyles({
-  root: {},
+  root: { cursor: 'pointer' },
   title: {
     fontSize: 14,
   },
@@ -21,7 +21,12 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard({ modalState, event }) {
+export default function SimpleCard({
+  modalState,
+  event,
+  handleSelect,
+  selected,
+}) {
   const classes = useStyles();
 
   const handleOpen = () => {
@@ -29,7 +34,12 @@ export default function SimpleCard({ modalState, event }) {
   };
 
   return (
-    <Card className={classes.root} variant='outlined'>
+    <Card
+      className={(classes.root, selected)}
+      style={{ cursor: 'pointer' }}
+      variant='outlined'
+      onClick={() => handleSelect(event.id)}
+    >
       <CardContent>
         <Typography
           className={classes.title}

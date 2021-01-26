@@ -18,12 +18,16 @@ const useStyles = makeStyles((theme) => ({
       marginTop: '15%',
     },
   },
+  selected: {
+    backgroundColor: 'lightblue',
+  },
 }));
 
 export default function Home() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [events, setEvents] = useState([]);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const allEvents = useCallback(async () => {
     const result = await getAllEvents();
@@ -45,13 +49,18 @@ export default function Home() {
           <Grid container spacing={2} className={classes.leftSection}>
             {events.map((evt) => (
               <Grid item md={6} xs={12} key={evt.id}>
-                <SimpleCard modalState={setOpen} event={evt} />
+                <SimpleCard
+                  modalState={setOpen}
+                  event={evt}
+                  handleSelect={setSelectedCard}
+                  selected={selectedCard === evt.id ? classes.selected : null}
+                />
               </Grid>
             ))}
           </Grid>
         </Grid>
         <Grid item md={6}>
-          <MyCalendar />
+          <MyCalendar event={events[selectedCard]} />
         </Grid>
       </Grid>
 
