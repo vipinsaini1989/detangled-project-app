@@ -28,6 +28,8 @@ export default function MyCalendar({ event }) {
       const nextDate = +new Date(event.start) + effectiveDays * MILLI_PER_DAY;
       dateRange.push(new Date(nextDate));
       setRange(dateRange);
+    } else {
+      setRange([new Date()]);
     }
   }, [event]);
 

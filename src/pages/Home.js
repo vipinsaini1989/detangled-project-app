@@ -3,7 +3,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import AddEditForm from '../components/AddEditForm';
 import MyCalendar from '../components/My-Calendar';
 import SimpleCard from '../components/SimpleCard';
-import { getAllEvents, updateEvent } from '../services/dataProvider';
+import {
+  deleteEvent,
+  getAllEvents,
+  updateEvent,
+} from '../services/dataProvider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +51,17 @@ export default function Home() {
     events[selectedCard] = result;
   };
 
+  const deleteExistingEvent = async (id) => {
+    await deleteEvent(id);
+    setEvents((prevEvts) => {
+      const newEvts = [...prevEvts];
+      const evtIdx = newEvts.findIndex((evt) => evt.id === id);
+      newEvts.splice(evtIdx, 1);
+      setSelectedCard(null);
+      return newEvts;
+    });
+  };
+
   return (
     <>
       <Grid container className={classes.root}>
@@ -58,21 +73,24 @@ export default function Home() {
                   modalState={setOpen}
                   event={evt}
                   handleSelect={setSelectedCard}
-                  selected={selectedCard === evt.id ? classes.selected : null}
+                  handleDelete={deleteExistingEvent}
+                  selected={
+                    selectedCard?.id === evt.id ? classes.selected : null
+                  }
                 />
               </Grid>
             ))}
           </Grid>
         </Grid>
         <Grid item md={6}>
-          <MyCalendar event={events[selectedCard]} />
+          <MyCalendar event={selectedCard} />
         </Grid>
       </Grid>
 
       <Modal open={open} onClose={handleClose}>
         <div>
           <AddEditForm
-            event={events[selectedCard]}
+            event={selectedCard}
             updateEvents={updateEvents}
             close={handleClose}
           />

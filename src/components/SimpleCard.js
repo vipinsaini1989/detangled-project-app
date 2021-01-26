@@ -25,6 +25,7 @@ export default function SimpleCard({
   modalState,
   event,
   handleSelect,
+  handleDelete,
   selected,
 }) {
   const classes = useStyles();
@@ -38,7 +39,7 @@ export default function SimpleCard({
       className={(classes.root, selected)}
       style={{ cursor: 'pointer' }}
       variant='outlined'
-      onClick={() => handleSelect(event.id)}
+      onClick={() => handleSelect(event)}
     >
       <CardContent>
         <Typography
@@ -69,7 +70,11 @@ export default function SimpleCard({
         >
           Edit
         </Button>
-        <Button size='small' className={classes.deleteBtn}>
+        <Button
+          size='small'
+          className={classes.deleteBtn}
+          onClick={() => handleDelete(event.id)}
+        >
           Delete
         </Button>
       </CardActions>
