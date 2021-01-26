@@ -14,4 +14,25 @@ const getAllEvents = async () => {
   return data;
 };
 
-export { getAllEvents };
+const updateEvent = async (evt) => {
+  const resp = await instance({
+    method: 'PUT',
+    url: `events/${evt.id}`,
+    data: evt,
+  });
+
+  const { data } = resp;
+  return data;
+};
+
+const deleteEvent = async (id) => {
+  const resp = await instance({
+    method: 'DELETE',
+    url: `events/${id}`,
+  });
+
+  const { data } = resp;
+  return data;
+};
+
+export { getAllEvents, updateEvent, deleteEvent };

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import AddEditForm from '../components/AddEditForm';
 import MyCalendar from '../components/My-Calendar';
 import SimpleCard from '../components/SimpleCard';
-import { getAllEvents } from '../services/dataProvider';
+import { getAllEvents, updateEvent } from '../services/dataProvider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +42,11 @@ export default function Home() {
     setOpen(false);
   };
 
+  const updateEvents = async (newFormData) => {
+    const result = await updateEvent(newFormData);
+    events[selectedCard] = result;
+  };
+
   return (
     <>
       <Grid container className={classes.root}>
@@ -66,7 +71,11 @@ export default function Home() {
 
       <Modal open={open} onClose={handleClose}>
         <div>
-          <AddEditForm />
+          <AddEditForm
+            event={events[selectedCard]}
+            updateEvents={updateEvents}
+            close={handleClose}
+          />
         </div>
       </Modal>
     </>

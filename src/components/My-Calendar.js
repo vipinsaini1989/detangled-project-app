@@ -24,7 +24,8 @@ export default function MyCalendar({ event }) {
   useEffect(() => {
     if (event) {
       const dateRange = [new Date(event.start)];
-      const nextDate = +new Date(event.start) + event.duration * MILLI_PER_DAY;
+      const effectiveDays = event.duration - 1;
+      const nextDate = +new Date(event.start) + effectiveDays * MILLI_PER_DAY;
       dateRange.push(new Date(nextDate));
       setRange(dateRange);
     }
