@@ -5,7 +5,13 @@ import 'react-calendar/dist/Calendar.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: '97%',
+    margin: '1rem',
+    [theme.breakpoints.down('sm')]: {
+      margin: 0,
+      position: 'fixed',
+      width: '95%',
+    },
   },
 }));
 

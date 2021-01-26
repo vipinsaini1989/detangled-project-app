@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard({ modalState }) {
+export default function SimpleCard({ modalState, event }) {
   const classes = useStyles();
 
   const handleOpen = () => {
@@ -29,25 +29,25 @@ export default function SimpleCard({ modalState }) {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} variant='outlined'>
       <CardContent>
         <Typography
           className={classes.title}
           color='textSecondary'
           gutterBottom
         >
-          2020-05-18
+          {new Date(event.start).toLocaleDateString()}
         </Typography>
         <Typography variant='h5' component='h2'>
-          North Oleta
+          {event.destination}
         </Typography>
         <Typography className={classes.pos} color='textSecondary'>
-          29 days tour
+          {event.duration} days tour
         </Typography>
         <Typography variant='body2' component='p'>
           Comment:
           <br />
-          {'Calculating Analyst'}
+          {event.comment}
         </Typography>
       </CardContent>
       <CardActions>
